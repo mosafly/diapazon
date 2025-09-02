@@ -1,0 +1,13 @@
+[build]
+  command = "npx next build"
+  publish = ".next"
+
+[functions]
+  node_bundler = "esbuild"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NEXT_DISABLE_SYMLINKS = "1"
