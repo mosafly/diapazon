@@ -1,13 +1,2 @@
-[build]
-  command = "npx next build"
-  publish = ".next"
-
-[functions]
-  node_bundler = "esbuild"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
-[build.environment]
-  NODE_VERSION = "20"
-  NEXT_DISABLE_SYMLINKS = "1"
+# Netlify configuration removed. This project no longer uses Netlify.
+ # File intentionally left as a stub to avoid build tooling confusion.
