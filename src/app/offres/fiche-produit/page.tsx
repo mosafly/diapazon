@@ -1,4 +1,3 @@
-import Sidebar from "@/components/Sidebar";
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,10 +17,7 @@ const products = [
 export default function FicheProduitPage() {
   return (
     <div className="flex min-h-screen">
-      <Sidebar />
       <main className="flex-1 p-4 md:p-6 space-y-4">
-        <div className="text-sm text-muted-foreground">Mandataire • Nos offres • Fiches produit</div>
-
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {products.map((p) => (
             <Card key={p.key} className="overflow-hidden rounded-lg">

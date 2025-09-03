@@ -4,12 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import Sidebar from "@/components/Sidebar";
+// Sidebar is provided by root layout
 
 export default function Home() {
   return (
     <div className="flex min-h-screen bg-[var(--background)]">
-      <Sidebar />
 
       {/* Main content */}
       <main className="flex-1 p-4 md:p-6 space-y-4">

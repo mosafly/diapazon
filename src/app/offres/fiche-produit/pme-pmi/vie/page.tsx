@@ -1,4 +1,4 @@
-import Sidebar from "@/components/Sidebar";
+// Sidebar provided by layout
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,16 +8,13 @@ import { cn } from "@/lib/utils";
 export default function PmePmiViePage() {
   return (
     <div className="flex min-h-screen">
-      <Sidebar />
       <main className="flex-1 p-4 md:p-6 space-y-4">
-        <div className="text-sm text-muted-foreground">Mandataire • Nos offres • Fiches produit • Offres PME/PMI</div>
-
         {/* Header + tabs */}
         <div className="flex items-center justify-between">
           <h1 className="text-xl font-semibold">Offres Vie</h1>
           <div className="flex gap-2">
             <Link
-              href="/offres/fiche-produit/pme-pmi?tab=non-vie"
+              href="/offres/fiche-produit/pme-pmi/non-vie"
               className="rounded-full border px-4 py-2 text-sm border-border text-foreground hover:bg-muted"
             >
               Offres Non-Vie
@@ -129,7 +126,7 @@ export default function PmePmiViePage() {
             </Card>
 
             <Link
-              href="/offres/fiche-produit/pme-pmi?tab=vie"
+              href="/offres/fiche-produit/pme-pmi/vie/cotation"
               className={cn(
                 buttonVariants(),
                 "w-full text-center"

@@ -41,8 +41,8 @@ export default function DocumentsVie() {
         </CardContent>
       </Card>
 
-      <div className="flex items-center justify-between">
-        <Link href="/offres/fiche-produit/pme-pmi/vie/souscription/informations" className={cn(buttonVariants({ variant: "secondary" }))}>Précédent</Link>
+      <div className="flex items-center justify-end mt-8 mr-8">
+        <Link href="/offres/fiche-produit/pme-pmi/vie/souscription/informations" className={cn(buttonVariants({ variant: "secondary" }), "mr-8")}>Précédent</Link>
         <Link href="/offres/fiche-produit/pme-pmi/vie/souscription/paiement" className={cn(buttonVariants())}>Suivant</Link>
       </div>
     </div>

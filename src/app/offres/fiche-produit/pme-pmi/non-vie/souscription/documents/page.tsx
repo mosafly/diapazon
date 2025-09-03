@@ -41,9 +41,9 @@ export default function Documents() {
         </CardContent>
       </Card>
 
-      <div className="flex items-center justify-between">
+      <div className="flex justify-end gap-2">
         <Link href="/offres/fiche-produit/pme-pmi/non-vie/souscription/informations" className={cn(buttonVariants({ variant: "secondary" }))}>Précédent</Link>
-        <Link href="/offres/fiche-produit/pme-pmi/non-vie/souscription/paiement" className={cn(buttonVariants(), "bg-teal-700 hover:bg-teal-800 text-white")}>Suivant</Link>
+        <Link href="/offres/fiche-produit/pme-pmi/non-vie/souscription/paiement" className={cn(buttonVariants())}>Suivant</Link>
       </div>
     </div>
   );

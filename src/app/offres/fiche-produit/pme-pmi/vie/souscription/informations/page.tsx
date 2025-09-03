@@ -5,7 +5,8 @@ import Link from "next/link";
 
 export default function InformationsVie() {
   return (
-    <Card>
+    <>
+      <Card>
       <CardHeader>
         <CardTitle className="text-base">Souscripteur & Assuré</CardTitle>
       </CardHeader>
@@ -54,6 +55,7 @@ export default function InformationsVie() {
           </Link>
         </div>
       </CardContent>
-    </Card>
+      </Card>
+    </>
   );
 }

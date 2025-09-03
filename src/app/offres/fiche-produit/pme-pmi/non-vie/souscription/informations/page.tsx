@@ -5,7 +5,8 @@ import Link from "next/link";
 
 export default function Informations() {
   return (
-    <Card>
+    <>
+      <Card>
       <CardHeader>
         <CardTitle className="text-base">Souscripteur & Assuré</CardTitle>
       </CardHeader>
@@ -39,21 +40,22 @@ export default function Informations() {
           <input className="h-10 rounded-md border border-border bg-background px-3 text-sm md:col-span-2" placeholder="N° Pièce d'identité" />
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex justify-end mb-8">
           <Link
-            href="/offres/fiche-produit/pme-pmi?tab=non-vie"
+            href="/offres/fiche-produit/pme-pmi/non-vie"
             className={cn(buttonVariants({ variant: "secondary" }))}
           >
             Précédent
           </Link>
           <Link
             href="/offres/fiche-produit/pme-pmi/non-vie/souscription/documents"
-            className={cn(buttonVariants(), "bg-teal-700 hover:bg-teal-800 text-white")}
+            className={cn(buttonVariants(), "bg-blue-700 hover:bg-blue-800 text-white")}
           >
             Suivant
           </Link>
         </div>
       </CardContent>
-    </Card>
+      </Card>
+    </>
   );
 }

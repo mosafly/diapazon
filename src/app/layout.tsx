@@ -3,6 +3,7 @@ import type React from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
+import Sidebar from "@/components/Sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,12 +29,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Header />
-        {children}
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        {/* Layout: Header full width on top, then row with Sidebar + content */}
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          {/* Make only the main content scroll; sidebar stays visible */}
+          <div className="flex flex-1 min-h-0 overflow-hidden">
+            <Sidebar />
+            <main className="flex-1 min-w-0 overflow-auto">{children}</main>
+          </div>
+        </div>
       </body>
     </html>
   );

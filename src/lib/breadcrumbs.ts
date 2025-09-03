@@ -3,8 +3,9 @@ export type Crumb = { href: string; label: string };
 const LABEL_MAP: Record<string, string> = {
   offres: "Nos offres",
   "fiche-produit": "Fiche produit",
-  "pme-pmi": "Offres PME/PMI",
-  "non-vie": "Offre Non-Vie",
+  "pme-pmi": "PME/PMI",
+  "non-vie": "Non-Vie",
+  vie: "Vie",
   tableau: "Tableau",
   souscription: "Souscription",
 };
@@ -23,9 +24,12 @@ export function getBreadcrumbs(pathname: string): Crumb[] {
   const parts = cleanPath.split("/").filter(Boolean);
   const crumbs: Crumb[] = [{ href: "/", label: "Mandataire" }];
   let acc = "";
+
   for (const part of parts) {
     acc += `/${part}`;
-    crumbs.push({ href: acc, label: humanize(part) });
+    const href = acc;
+    const label = humanize(part);
+    crumbs.push({ href, label });
   }
   return crumbs;
 }

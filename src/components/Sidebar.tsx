@@ -3,38 +3,32 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-
-// Figma asset icons (mapped in order to nav entries)
-const iconProspection = "http://localhost:3845/assets/800b5d393b4db8d450089311370a01fa2ceb2e86.svg";
-const iconEspaceClient = "http://localhost:3845/assets/9909ab871ef1e04f6f2266e8c844609a6e6c22b2.svg";
-const iconNosOffres = "http://localhost:3845/assets/6e5e7e039beff277ca56cefba75efce7e4854a87.svg";
-const iconSimulation = "http://localhost:3845/assets/520ce0461dd05c14c0494f006a875d7cc06f25d0.svg";
-const iconContrats = "http://localhost:3845/assets/20ba13721eaf855c4f97bd874461bf41b0712479.svg";
-const iconFaq = "http://localhost:3845/assets/f3640738f1daba3181042546a00eb88eea0c2971.svg";
+import { Calculator, FileText, HelpCircle, Search, Tags, User } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 type NavItem = {
   label: string;
   href: string;
-  icon?: string;
+  icon?: LucideIcon;
   children?: { label: string; href: string }[];
 };
 
 const nav: NavItem[] = [
-  { label: "Prospection", href: "#", icon: iconProspection },
-  { label: "Espace client", href: "#", icon: iconEspaceClient },
+  { label: "Prospection", href: "#", icon: Search },
+  { label: "Espace client", href: "#", icon: User },
   {
     label: "Nos offres",
     href: "#",
-    icon: iconNosOffres,
+    icon: Tags,
     children: [
       { label: "Fiches produit", href: "/offres/fiche-produit" },
       { label: "Formules/Avantages", href: "#" },
       { label: "Déclaration de sinistres", href: "/gestion-sinistre" },
     ],
   },
-  { label: "Simulations/Souscription", href: "#", icon: iconSimulation },
-  { label: "Contrats", href: "#", icon: iconContrats },
-  { label: "FAQ", href: "#", icon: iconFaq },
+  { label: "Simulations/Souscription", href: "#", icon: Calculator },
+  { label: "Contrats", href: "#", icon: FileText },
+  { label: "FAQ", href: "#", icon: HelpCircle },
 ];
 
 export function Sidebar() {
@@ -56,11 +50,7 @@ export function Sidebar() {
                 active ? "bg-[#F2F8FC] text-[#003781]" : "hover:bg-slate-50 text-slate-600"
               )}
             >
-              {item.icon && (
-                <span className="inline-block size-[14px] opacity-90">
-                  <img alt="" className="block max-w-none size-full" src={item.icon} />
-                </span>
-              )}
+              {item.icon ? <item.icon className="size-4 opacity-90" /> : null}
               <span className="leading-none">{item.label}</span>
             </div>
           );

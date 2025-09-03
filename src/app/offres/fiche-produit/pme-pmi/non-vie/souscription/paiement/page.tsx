@@ -4,17 +4,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
 export default function Paiement() {
   const [selected, setSelected] = useState<string | null>(null);
   const mobile = [
-    { name: "Orange Money" },
-    { name: "MTN Money" },
-    { name: "Wave" },
-    { name: "Moov Africa" },
+    { name: "Orange Money", src: "/payments/orange-money.svg" },
+    { name: "MTN Money", src: "/payments/mtn.svg" },
+    { name: "Wave", src: "/payments/wave.svg" },
+    { name: "Moov Africa", src: "/payments/moov-africa.svg" },
   ];
   const others = [
-    { name: "Carte bleue" },
+    { name: "Carte bancaire" },
     { name: "Virement" },
   ];
   // Form states
@@ -25,15 +27,20 @@ export default function Paiement() {
   const [cardCvc, setCardCvc] = useState("");
   const [virementIban, setVirementIban] = useState("");
   const [virementRef, setVirementRef] = useState("");
+  const [linkSent, setLinkSent] = useState(false);
+  const [linkUrl, setLinkUrl] = useState<string | null>(null);
 
   const isMobileMethod = selected && mobile.some(m => m.name === selected);
-  const isCard = selected === "Carte bleue";
+  const isCard = selected === "Carte bancaire";
   const isVirement = selected === "Virement";
   const canPay = Boolean(
     (isMobileMethod && mobilePhone.trim().length >= 8) ||
-    (isCard && cardName && cardNumber && cardExpiry && cardCvc) ||
-    (isVirement && virementIban && virementRef)
+    (isCard) ||
+    (isVirement) // Virement: plus de champs, simple sélection suffit
   );
+
+  const searchParams = useSearchParams();
+  const cotation = searchParams.get("cotation") ?? "—";
 
   return (
     <div className="space-y-4">
@@ -42,6 +49,10 @@ export default function Paiement() {
           <CardTitle className="text-base">Récapitulatif</CardTitle>
         </CardHeader>
         <CardContent>
+          <div className="flex items-center justify-between text-sm">
+            <div className="text-muted-foreground">N° de cotation</div>
+            <div className="font-medium">{cotation}</div>
+          </div>
           <div className="flex items-center justify-between text-sm">
             <div className="text-muted-foreground">Frais opérateur</div>
             <div>0 F CFA</div>
@@ -67,17 +78,36 @@ export default function Paiement() {
                   key={p.name}
                   onClick={() => setSelected(p.name)}
                   className={cn(
-                    "h-16 rounded-md border text-sm",
+                    "h-24 rounded-md border text-sm flex flex-col items-center justify-center gap-2 px-2",
                     isActive ? "border-[var(--accent)] bg-[var(--accent)]/10" : "hover:bg-muted"
                   )}
                 >
-                  {p.name}
+                  <Image src={p.src} alt={p.name} width={64} height={32} className="object-contain" />
+                  <span className="truncate max-w-[120px]">{p.name}</span>
                 </button>
               );
             })}
           </div>
         </CardContent>
       </Card>
+
+      {linkSent && linkUrl && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Lien de paiement envoyé</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground">
+              Un lien de paiement sécurisé a été généré pour la carte bancaire.
+            </p>
+            <div className="mt-2 text-sm">
+              <a className="text-primary underline break-all" href={linkUrl} target="_blank" rel="noreferrer">
+                {linkUrl}
+              </a>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <Card>
         <CardHeader>
@@ -117,36 +147,26 @@ export default function Paiement() {
           )}
           {isCard && (
             <div className="mt-4 grid gap-3">
-              <div className="grid gap-2">
-                <label className="text-sm text-muted-foreground">Nom sur la carte</label>
-                <input className="h-10 px-3 rounded-md border bg-background" value={cardName} onChange={(e)=>setCardName(e.target.value)} />
-              </div>
-              <div className="grid gap-2">
-                <label className="text-sm text-muted-foreground">Numéro de carte</label>
-                <input className="h-10 px-3 rounded-md border bg-background" value={cardNumber} onChange={(e)=>setCardNumber(e.target.value)} inputMode="numeric" placeholder="1234 5678 9012 3456" />
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="grid gap-2">
-                  <label className="text-sm text-muted-foreground">Expiration</label>
-                  <input className="h-10 px-3 rounded-md border bg-background" value={cardExpiry} onChange={(e)=>setCardExpiry(e.target.value)} placeholder="MM/AA" />
-                </div>
-                <div className="grid gap-2">
-                  <label className="text-sm text-muted-foreground">CVC</label>
-                  <input className="h-10 px-3 rounded-md border bg-background" value={cardCvc} onChange={(e)=>setCardCvc(e.target.value)} inputMode="numeric" placeholder="123" />
-                </div>
-              </div>
+              <p className="text-sm text-muted-foreground">
+                Aucun champ à saisir ici. Un lien de paiement par carte bancaire sera envoyé au client pour finaliser le règlement.
+              </p>
             </div>
           )}
           {isVirement && (
             <div className="mt-4 grid gap-3">
-              <div className="grid gap-2">
-                <label className="text-sm text-muted-foreground">IBAN / RIB</label>
-                <input className="h-10 px-3 rounded-md border bg-background" value={virementIban} onChange={(e)=>setVirementIban(e.target.value)} placeholder="FR76 ...." />
-              </div>
-              <div className="grid gap-2">
-                <label className="text-sm text-muted-foreground">Référence de virement</label>
-                <input className="h-10 px-3 rounded-md border bg-background" value={virementRef} onChange={(e)=>setVirementRef(e.target.value)} placeholder="Numéro de dossier" />
-              </div>
+              <p className="text-sm text-muted-foreground">
+                Téléchargez le RIB Sanlam pour effectuer votre virement.
+              </p>
+              <a
+                href="/docs/rib-sanlam.pdf"
+                download
+                className={cn(buttonVariants(), "w-fit")}
+              >
+                Télécharger le RIB (PDF)
+              </a>
+              <p className="text-xs text-muted-foreground">
+                Une fois le virement effectué, vous pourrez transmettre la preuve sur l’étape suivante.
+              </p>
             </div>
           )}
         </CardContent>
@@ -157,11 +177,14 @@ export default function Paiement() {
         <button
           type="button"
           disabled={!canPay}
-          className={cn(
-            buttonVariants(),
-            "w-full md:w-auto",
-            !canPay && "opacity-50 cursor-not-allowed"
-          )}
+          onClick={() => {
+            if (isCard) {
+              const url = `https://pay.sanlam.test/link/${encodeURIComponent(cotation)}-${Date.now()}`;
+              setLinkUrl(url);
+              setLinkSent(true);
+            }
+          }}
+          className={cn(buttonVariants(), !canPay && "opacity-60 cursor-not-allowed")}
         >
           Payer
         </button>
