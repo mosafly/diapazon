@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -8,6 +8,14 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 
 export default function PaiementVie() {
+  return (
+    <Suspense fallback={<div className="space-y-4"><div className="h-20 animate-pulse rounded-md bg-muted" /><div className="h-40 animate-pulse rounded-md bg-muted" /></div>}>
+      <PaiementVieInner />
+    </Suspense>
+  );
+}
+
+function PaiementVieInner() {
   const [selected, setSelected] = useState<string | null>(null);
   const mobile = [
     { name: "Orange Money", src: "/payments/orange-money.svg" },
